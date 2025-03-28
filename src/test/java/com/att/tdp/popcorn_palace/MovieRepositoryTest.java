@@ -53,7 +53,7 @@ class MovieRepositoryTest {
                         .contentType("application/json")
                         .content(movieJson2))
                 .andDo(print())
-                .andExpect(status().isBadRequest())  // מצב 400
+                .andExpect(status().isBadRequest())  
                 .andExpect(jsonPath("$.message").value("Title is required and cannot be empty"));
 
         this.mockMvc.perform(get("/movies/all")
