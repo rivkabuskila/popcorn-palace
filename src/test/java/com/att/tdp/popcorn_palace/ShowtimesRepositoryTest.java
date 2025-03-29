@@ -29,18 +29,18 @@ public class ShowtimesRepositoryTest {
                         .content(movieJson));
 
         String showtimesJson = "{"
-                + "\"movieId\": 1,"
+                + "\"movieId\": 2,"
                 + "\"price\": 20.2,"
                 + "\"theater\": \"Sample Theater\","
-                + "\"startTime\": \"2025-02-14T11:47:46.125405Z\","
-                + "\"endTime\": \"2025-02-14T14:47:46.125405Z\""
+                + "\"startTime\": \"2025-07-25T11:47:46.125405Z\","
+                + "\"endTime\": \"2025-07-25T14:47:46.125405Z\""
                 + "}";
         this.mockMvc.perform(post("/showtimes")
                         .contentType("application/json")
                         .content(showtimesJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"id\":1,\"price\":20.2,\"movieId\":1,\"theater\":\"Sample Theater\",\"startTime\":\"2025-02-14T11:47:46.125405Z\",\"endTime\":\"2025-02-14T14:47:46.125405Z\"}")));
+                .andExpect(content().string(containsString("{\"id\":1,\"price\":20.2,\"movieId\":2,\"theater\":\"Sample Theater\",\"startTime\":\"2025-07-25T11:47:46.125405Z\",\"endTime\":\"2025-07-25T14:47:46.125405Z\"}")));
     }
 
     @Test
@@ -57,24 +57,24 @@ public class ShowtimesRepositoryTest {
                 .content(movieJson));
 
         String showtimesJson = "{"
-                + "\"movieId\": 1,"
+                + "\"movieId\": 3,"
                 + "\"price\": 20.2,"
                 + "\"theater\": \"Sample Theater 1\","
-                + "\"startTime\": \"2025-02-14T11:47:46.125405Z\","
-                + "\"endTime\": \"2025-02-14T14:47:46.125405Z\""
+                + "\"startTime\": \"2025-07-25T11:47:46.125405Z\","
+                + "\"endTime\": \"2025-07-25T14:47:46.125405Z\""
                 + "}";
         this.mockMvc.perform(post("/showtimes")
                         .contentType("application/json")
                         .content(showtimesJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"id\":2,\"price\":20.2,\"movieId\":1,\"theater\":\"Sample Theater 1\",\"startTime\":\"2025-02-14T11:47:46.125405Z\",\"endTime\":\"2025-02-14T14:47:46.125405Z\"}")));
+                .andExpect(content().string(containsString("{\"id\":2,\"price\":20.2,\"movieId\":3,\"theater\":\"Sample Theater 1\",\"startTime\":\"2025-07-25T11:47:46.125405Z\",\"endTime\":\"2025-07-25T14:47:46.125405Z\"}")));
 
         this.mockMvc.perform(get("/showtimes/2")
                         .contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"id\":2,\"price\":20.2,\"movieId\":1,\"theater\":\"Sample Theater 1\",\"startTime\":\"2025-02-14T11:47:46.125405Z\",\"endTime\":\"2025-02-14T14:47:46.125405Z\"}")));
+                .andExpect(content().string(containsString("{\"id\":2,\"price\":20.2,\"movieId\":3,\"theater\":\"Sample Theater 1\",\"startTime\":\"2025-07-25T11:47:46.125405Z\",\"endTime\":\"2025-07-25T14:47:46.125405Z\"}")));
         this.mockMvc.perform(get("/showtimes/56546465")
                         .contentType("application/json"))
                 .andDo(print())
@@ -88,8 +88,8 @@ public class ShowtimesRepositoryTest {
                 + "\"movieId\": 1,"
                 + "\"price\": 30.2,"
                 + "\"theater\": \"Sample Theater 1\","
-                + "\"startTime\": \"2025-02-14T11:47:46.125405Z\","
-                + "\"endTime\": \"2025-02-14T14:47:46.125405Z\""
+                + "\"startTime\": \"2025-07-25T11:47:46.125405Z\","
+                + "\"endTime\": \"2025-07-25T14:47:46.125405Z\""
                 + "}";
         this.mockMvc.perform(post("/showtimes/update/2")
                         .contentType("application/json")
@@ -108,6 +108,27 @@ public class ShowtimesRepositoryTest {
 
     @Test
     void deleteShowtimes() throws Exception {
+        String movieJson = "{"
+                + "\"title\": \"Sample Movie Title\","
+                + "\"genre\": \"Action\","
+                + "\"duration\": 120,"
+                + "\"rating\": 8.7,"
+                + "\"releaseYear\": 2025"
+                + "}";
+        this.mockMvc.perform(post("/movies")
+                .contentType("application/json")
+                .content(movieJson));
+
+        String showtimesJson = "{"
+                + "\"movieId\": 1,"
+                + "\"price\": 20.2,"
+                + "\"theater\": \"Sample Theater\","
+                + "\"startTime\": \"2025-07-25T11:47:46.125405Z\","
+                + "\"endTime\": \"2025-07-25T14:47:46.125405Z\""
+                + "}";
+        this.mockMvc.perform(post("/showtimes")
+                .contentType("application/json")
+                .content(showtimesJson));
         this.mockMvc.perform(delete("/showtimes/1"))
                 .andExpect(status().isOk());
         this.mockMvc.perform(delete("/showtimes/56546465"))
