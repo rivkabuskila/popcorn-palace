@@ -13,3 +13,7 @@ docker compose up -d
 ## Build the Application
 mvn clean install
 
+## Run the Application
+mvn spring-boot:run
+
+
