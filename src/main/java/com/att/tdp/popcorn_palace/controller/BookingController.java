@@ -48,6 +48,9 @@ public class BookingController {
         if (theater.getTotalSeats() < bookings.getSeatNumber() || bookings.getSeatNumber()  < 1){
             throw new ResourceNotFoundException("invalid seat number");
         }
+        if (bookingsRepository.existsByShowtimeIdAndSeatNumber(bookings.getShowtimeId(), bookings.getSeatNumber())) {
+            throw new ResourceNotFoundException("Seat already booked. Please choose another seat");
+        }
         Bookings savedBooking = bookingsRepository.save(bookings);
         Map<String, String> response = new HashMap<>();
         response.put("bookingId", savedBooking.getUserId().toString());
