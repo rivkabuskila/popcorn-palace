@@ -15,12 +15,12 @@ import java.util.List;
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
 
     @Query("SELECT s FROM Showtime s WHERE s.theater = :theater " +
-            "AND s.id != :id " +
+            "AND s.movieId != :movieId " +
             "AND ((:startTime BETWEEN s.startTime AND s.endTime) " +
             "OR (:endTime BETWEEN s.startTime AND s.endTime) " +
             "OR (s.startTime BETWEEN :startTime AND :endTime))")
     List<Showtime> findOverlappingShowtimes(
-            @Param("id") Long id,
+            @Param("movieId") Long movieId,
             @Param("theater") String theater,
             @Param("startTime") ZonedDateTime startTime,
             @Param("endTime") ZonedDateTime endTime
