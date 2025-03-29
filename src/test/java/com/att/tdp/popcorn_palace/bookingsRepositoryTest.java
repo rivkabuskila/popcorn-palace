@@ -30,7 +30,7 @@ public class bookingsRepositoryTest {
                 .content(movieJson));
 
         String showtimesJson = "{"
-                + "\"movieId\": 1,"
+                + "\"movieId\": 2,"
                 + "\"price\": 20.2,"
                 + "\"theater\": \"Sample Theater\","
                 + "\"startTime\": \"2025-06-25T11:47:46.125405Z\","
@@ -40,7 +40,7 @@ public class bookingsRepositoryTest {
                         .contentType("application/json")
                         .content(showtimesJson));
         String bookingJson = "{"
-                + "\"showtimeId\": 1,"
+                + "\"showtimeId\": 2,"
                 + "\"seatNumber\": 15,"
                 + "\"userId\": \"84438967-f68f-4fa0-b620-0f08217e76af\""
                 + "}";
@@ -53,18 +53,18 @@ public class bookingsRepositoryTest {
         String bookingJson2 = "{"
                 + "\"showtimeId\": 2,"
                 + "\"seatNumber\": 15,"
-                + "\"userId\": \"84438967-f68f-4fa0-b620-0f08217e76af\""
+                + "\"userId\": \"95438967-f68f-4fa0-b620-0f08217e76af\""
                 + "}";
         this.mockMvc.perform(post("/bookings")
                         .contentType("application/json")
                         .content(bookingJson2))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Showtime not exist with id :2"));
+                .andExpect(jsonPath("$.message").value("Seat already booked. Please choose another seat"));
 
 
         String bookingJson3 = "{"
-                + "\"showtimeId\": 1,"
+                + "\"showtimeId\": 2,"
                 + "\"seatNumber\": -15,"
                 + "\"userId\": \"84438967-f68f-4fa0-b620-0f08217e76af\""
                 + "}";
@@ -74,6 +74,20 @@ public class bookingsRepositoryTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("invalid seat number"));
+
+
+        String bookingJson4 = "{"
+                + "\"showtimeId\": 50,"
+                + "\"seatNumber\": 20,"
+                + "\"userId\": \"84438967-f68f-4fa0-b620-0f08217e76af\""
+                + "}";
+        this.mockMvc.perform(post("/bookings")
+                        .contentType("application/json")
+                        .content(bookingJson4))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Showtime not exist with id :50"));
+
 
 
 
