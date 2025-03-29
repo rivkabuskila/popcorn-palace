@@ -50,14 +50,14 @@ public class ShowtimeController {
 
     private void checkOverlappingS(Showtime showtime){
         List<Showtime> overlappingShowtimes = ShowtimeRepository.findOverlappingShowtimes(
-                showtime.getId(),
+                showtime.getMovieId(),
                 showtime.getTheater(),
                 showtime.getStartTime(),
                 showtime.getEndTime()
         );
 
         if (!overlappingShowtimes.isEmpty()) {
-            throw new ResourceNotFoundException("There is already a showtime scheduled for this theater at the given time.");
+            throw new ResourceNotFoundException("There is already a showtime scheduled for this theater at the given time");
         }
 
     }
