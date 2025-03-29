@@ -41,6 +41,32 @@ public class ShowtimesRepositoryTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("{\"id\":1,\"price\":20.2,\"movieId\":2,\"theater\":\"Sample Theater\",\"startTime\":\"2025-07-25T11:47:46.125405Z\",\"endTime\":\"2025-07-25T14:47:46.125405Z\"}")));
+
+        String movieJson2 = "{"
+                + "\"title\": \"Sample Movie Title 1\","
+                + "\"genre\": \"Action\","
+                + "\"duration\": 150,"
+                + "\"rating\": 5.7,"
+                + "\"releaseYear\": 2024"
+                + "}";
+        this.mockMvc.perform(post("/movies")
+                .contentType("application/json")
+                .content(movieJson2));
+
+
+        String showtimesJson2 = "{"
+                + "\"movieId\": 3,"
+                + "\"price\": 20.2,"
+                + "\"theater\": \"Sample Theater\","
+                + "\"startTime\": \"2025-07-25T11:47:46.125405Z\","
+                + "\"endTime\": \"2025-07-25T14:47:46.125405Z\""
+                + "}";
+        this.mockMvc.perform(post("/showtimes")
+                        .contentType("application/json")
+                        .content(showtimesJson2))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("There is already a showtime scheduled for this theater at the given time"));
     }
 
     @Test
