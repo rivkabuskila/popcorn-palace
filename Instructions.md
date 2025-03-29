@@ -16,4 +16,8 @@ mvn clean install
 ## Run the Application
 mvn spring-boot:run
 
+## Running Tests
+mvn test
+
+
 
