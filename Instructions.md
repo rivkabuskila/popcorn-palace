@@ -7,5 +7,9 @@ Ensure you have the following installed on your system:
 - **Docker Compose**
 
 
-## 2. Run PostgreSQL Database with Docker Compose
+## Run PostgreSQL Database with Docker Compose
 docker compose up -d
+
+## Build the Application
+mvn clean install
+
